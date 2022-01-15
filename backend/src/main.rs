@@ -12,9 +12,9 @@ use slog::Drain;
 use std::env;
 use std::error::Error;
 
-fn main() -> Result<(), Box<dyn Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
     let config_file_path = env::var("VM_CONFIG_FILE").ok();
-
     let settings = Settings::new(config_file_path)?;
 
     let _sentry_guard = sentry::init((

@@ -98,7 +98,6 @@ $(eval $(call ECHO_template,compose-go-project-path,,$$(GO_PROJECT_PACKAGE)))
 $(eval $(call SEDDER_TARGET_template,sonar-properties,sonar-project.properties.in,,sonar-project.properties))
 
 clean:
-	docker-compose down
 	rm -rf Dockerfile $(foreach cmd,$(CMDS), Dockerfile.$(cmd))
 	rm -rf sonar-project.properties
 

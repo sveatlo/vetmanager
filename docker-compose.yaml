@@ -13,7 +13,6 @@ services:
         ports:
             - "1206:1206"
 
-
     db:
         image: cockroachdb/cockroach
         command: start-single-node --insecure
@@ -26,4 +25,3 @@ services:
         ports:
             - "3000:80"
             - "14645:14645"
-
