@@ -1,4 +1,4 @@
-COMPONENTS=backend
+COMPONENTS=backend frontend
 ENVS=dev prod
 
 .PHONY: dev

@@ -11,7 +11,17 @@ services:
         volumes:
             - "./backend:/app"
         ports:
-            - "1206:1206"
+            - "1210:1210"
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        environment: {}
+        volumes:
+            - "./frontend:/app"
+        ports:
+            - "1310:1310"
 
     db:
         image: cockroachdb/cockroach

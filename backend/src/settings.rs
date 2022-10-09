@@ -12,6 +12,8 @@ pub struct Settings {
     pub database: Database,
     #[serde(default)]
     pub http: HTTP,
+    #[serde(default)]
+    pub auth: Auth,
 }
 
 #[derive(Default, Debug, Deserialize)]
@@ -22,6 +24,12 @@ pub struct Database {
 #[derive(Debug, Deserialize)]
 pub struct HTTP {
     pub listen_address: String,
+}
+
+#[derive(Default, Debug, Deserialize)]
+pub struct Auth {
+    pub jwt_secret: String,
+    pub hash_salt: String,
 }
 
 impl Settings {
@@ -38,7 +46,6 @@ impl Settings {
         }
         s.merge(Environment::new().prefix("VM").separator("__"))?;
 
-        // You can deserialize (and thus freeze) the entire configuration as
         s.try_into()
     }
 }
@@ -46,7 +53,7 @@ impl Settings {
 impl Default for HTTP {
     fn default() -> Self {
         Self {
-            listen_address: ":1206".into(),
+            listen_address: "0.0.0.0:1210".into(),
         }
     }
 }

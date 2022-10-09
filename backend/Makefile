@@ -5,7 +5,7 @@ ENVS := prod dev
 
 CC = cargo
 
-BUILDIMAGE = rust:1.54-buster
+BUILDIMAGE = rust:1.58-bullseye
 RUNIMAGE = alpine
 REGISTRY ?= registry.vunder.dev/trivet/vetmanager
 GITLAB_USER ?= gitlab-ci-token
@@ -13,7 +13,7 @@ GITLAB_ACCESS_TOKEN ?= $(CI_JOB_TOKEN)
 
 # project_name is defined as the last part of package/git repo
 # PROJECT_NAME = $(shell echo '$(GO_PROJECT_PACKAGE)' | awk -F'/' '{print $$NF}' )
-PROJECT_NAME = vetmanager-backend
+PROJECT_NAME = backend
 CMD_PKG_PATH = ./cmd/$(CMD_NAME)
 CMD_CONFIG_FILENAME ?= $(CMD_NAME).yml
 CMD_BIN_FILE = $(PROJECT_NAME)-$(CMD_NAME)-$(OS)-$(ARCH)
@@ -43,7 +43,8 @@ define RUN_template =
 .PHONY: run-$(1)
 run-$(1): CMD_NAME=$(1)
 run-$(1):
-	$(CC) run --bin $$(CMD_NAME) -- $$(ARGS)
+	# $(CC) run --bin $$(CMD_NAME) -- $$(ARGS)
+	$(CC) watch -x check -x 'run -- $$(ARGS)'
 endef
 $(foreach cmd, $(CMDS), $(eval $(call RUN_template,$(cmd))))
 
