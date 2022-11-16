@@ -2,8 +2,9 @@ COMPONENTS=backend frontend
 ENVS=dev prod
 
 .PHONY: dev
+dev: SERVICES?=db franchise $(COMPONENTS)
 dev: $(foreach component,$(COMPONENTS),$(component)-dockerfile-dev)
-	docker-compose up --build
+	docker-compose up --build $(SERVICES)
 
 .PHONY: clean
 clean: $(foreach component,$(COMPONENTS),$(component)-clean)
@@ -14,6 +15,7 @@ clean: $(foreach component,$(COMPONENTS),$(component)-clean)
 # 1 - component
 # 2 - target
 define PASSALONG_template =
+.PHONY: $(1)-$(2)
 $(1)-$(2):
 	@echo "# running \"$(2)\" in $(1)"
 	@make -s -C $(1) $(2)

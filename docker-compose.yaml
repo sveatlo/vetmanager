@@ -1,37 +1,37 @@
 version: "3"
 
 services:
-    api:
-        build:
-            context: ./backend
-            dockerfile: Dockerfile.api
-        environment: {}
-        links:
-            - db
-        volumes:
-            - "./backend:/app"
-        ports:
-            - "1210:1210"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.api
+    environment: {}
+    links:
+      - db
+    volumes:
+      - "./backend:/app"
+    ports:
+      - "1210:1210"
 
-    frontend:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile
-        environment: {}
-        volumes:
-            - "./frontend:/app"
-        ports:
-            - "1310:1310"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment: {}
+    volumes:
+      - "./frontend:/app"
+    ports:
+      - "1310:1310"
 
-    db:
-        image: cockroachdb/cockroach
-        command: start-single-node --insecure
-        ports:
-            - "26257:26257"
-            - "8080:8080"
+  db:
+    image: cockroachdb/cockroach
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
 
-    franchise:
-        image: binakot/franchise
-        ports:
-            - "3000:80"
-            - "14645:14645"
+  franchise:
+    image: binakot/franchise
+    ports:
+      - "3000:80"
+      - "14645:14645"

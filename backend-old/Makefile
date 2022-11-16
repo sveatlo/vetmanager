@@ -5,7 +5,7 @@ ENVS := prod dev
 
 CC = cargo
 
-BUILDIMAGE = rust:1.64-bullseye
+BUILDIMAGE = rust:1.58-bullseye
 RUNIMAGE = alpine
 REGISTRY ?= registry.vunder.dev/trivet/vetmanager
 GITLAB_USER ?= gitlab-ci-token

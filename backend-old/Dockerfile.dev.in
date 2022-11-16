@@ -1,0 +1,16 @@
+# Build dev image
+FROM {{ BUILDIMAGE }} as builder
+
+# prepare project
+WORKDIR /app
+
+# prepare system
+RUN cargo install -f cargo-binutils
+RUN rustup component add llvm-tools-preview
+RUN cargo install cargo-watch
+RUN rustup component add rustfmt
+ENV CARGO_TARGET_DIR=/tmp/{{ PROJECT_NAME }}/target
+RUN git config --global url."https://{{ GITLAB_USER }}:{{ GITLAB_ACCESS_TOKEN }}@git.vunder.dev/".insteadOf "https://git.vunder.dev/"
+
+CMD ["make", "run-{{ CMD_NAME }}"]
+

@@ -1,30 +1,28 @@
 [package]
 name = "vetmanager-backend"
-version = "0.0.1"
-authors = ["Svätopluk Hanzel <svatoplukhanzel@pm.me>"]
-edition = "2018"
+version = "0.1.0"
+edition = "2021"
 
-
-[[bin]]
-name = "api"
-path = "src/main.rs"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.65"
+axum = "0.5.16"
 config = "0.13.2"
-slog = "2.7.0"
-slog-async = "2.7.0"
-slog-term = "2.9.0"
+diesel = { version = "2.0.2", features = ["postgres", "r2d2", "extras"] }
+diesel_migrations = { version = "2.0.0", features = ["postgres"] }
+http = "0.2.8"
+log = "0.4.17"
+metrics = "0.20.1"
+metrics-exporter-prometheus = "0.11.0"
+metrics-process = "1.0.3"
 sentry = "0.27.0"
-sentry-slog = "0.27.0"
-serde = "1.0.142"
-serde_json = "1.0.83"
-tokio = { version = "1.20.1", features = ["full"] }
-prost = "0.11"
-diesel = { version = "1.4", features = ["postgres", "r2d2"] }
-diesel_migrations = "1.4.0"
-r2d2 = "0.8"
-warp = "0.3"
-bcrypt = "0.13"
-
-[build-dependencies]
-tonic-build = "0.8"
+sentry-tracing = "0.27.0"
+serde = "1.0.145"
+serde_json = "1.0.85"
+thiserror = "1.0.37"
+tokio = { version = "1.21.2", features = ["full", "tracing"]}
+tower = "0.4.13"
+tower-http = { version = "0.3.4", features = ["trace", "compression-br", "propagate-header", "sensitive-headers", "cors"] }
+tracing = "0.1.37"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

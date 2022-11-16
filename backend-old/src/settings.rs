@@ -34,19 +34,19 @@ pub struct Auth {
 
 impl Settings {
     pub fn new(filepath: Option<String>) -> Result<Self, ConfigError> {
-        let mut builder = Config::builder();
+        let mut s = Config::default();
 
-        builder = builder.
-                    set_default("sentry_dsn", "https://52e933ff5fc4441b88037fe772c536a7@o331834.ingest.sentry.io/5882704")?.
-                    set_default("database.url", "postgresql://root@db:26257/postgres?sslmode=disable")?;
+        s.set_default(
+            "sentry_dsn",
+            "https://52e933ff5fc4441b88037fe772c536a7@o331834.ingest.sentry.io/5882704",
+        )?;
+
         if let Some(filepath) = filepath {
-            builder = builder.add_source(File::with_name(filepath.as_str()));
+            s.merge(File::with_name(&*filepath))?;
         }
+        s.merge(Environment::new().prefix("VM").separator("__"))?;
 
-        builder = builder.add_source(Environment::default().prefix("VM").separator("__"));
-
-        builder.build()?
-            .try_deserialize()
+        s.try_into()
     }
 }
 
