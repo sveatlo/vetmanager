@@ -7,8 +7,12 @@ pub enum AppError {
     BadRequest,
     #[error("Unauthorized")]
     Unauthorized,
+    #[error("Forbidden")]
+    Forbidden,
     #[error("Resouce `{0}` was not found")]
     NotFound(String),
+    #[error("I'm a teapot.")]
+    Teapot,
 
     #[error("{0}")]
     Unknown(#[from] anyhow::Error),
@@ -20,7 +24,9 @@ impl AppError {
             // 4XX Errors
             AppError::BadRequest => StatusCode::BAD_REQUEST,
             AppError::Unauthorized => StatusCode::UNAUTHORIZED,
+            AppError::Forbidden => StatusCode::FORBIDDEN,
             AppError::NotFound(_) => StatusCode::NOT_FOUND,
+            AppError::Teapot => StatusCode::IM_A_TEAPOT,
 
             AppError::Unknown(_) => StatusCode::INTERNAL_SERVER_ERROR,
         }

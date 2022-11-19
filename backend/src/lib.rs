@@ -4,7 +4,7 @@ mod http;
 mod metrics;
 pub mod response;
 
-use axum::{response::IntoResponse, Router};
+use axum::Router;
 use tower::ServiceBuilder;
 use tower_http::{
     compression::CompressionLayer, cors::CorsLayer, propagate_header::PropagateHeaderLayer,
@@ -41,6 +41,5 @@ pub fn create_router() -> Router {
                 std::future::ready(prometheus_handle.render())
             }),
         )
-        // .fallback(routes::main::not_found())
         .layer(middleware_stack)
 }
